@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leaf.mybatis.mapper.UserMapper">
+
+    <select id="selectByUserId" resultType="com.leaf.mybatis.user.User">
+        SELECT
+          t.USER_ID userId,
+          t.USER_NAME userName,
+          t.MOBILE_PHONE mobilePhone
+        FROM sys_user_0 t
+        WHERE t.USER_ID = #{value};
+    </select>
+
+    <insert id="insertUser" parameterType="com.leaf.mybatis.user.User">
+        INSERT INTO sys_user(USER_ID, USER_NAME, AGE, MOBILE_PHONE)
+        VALUES (#{userId}, #{userName}, #{age}, #{mobilePhone})
+    </insert>
+
+</mapper>

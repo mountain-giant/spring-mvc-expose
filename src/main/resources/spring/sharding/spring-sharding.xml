@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sharding="http://shardingjdbc.io/schema/shardingjdbc/sharding"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://shardingjdbc.io/schema/shardingjdbc/sharding http://shardingjdbc.io/schema/shardingjdbc/sharding/sharding.xsd">
+
+    <sharding:inline-strategy id="userTableStrategy" sharding-column="AGE" algorithm-expression="sys_user_${AGE % 2}" />
+
+    <sharding:data-source id="shardingDataSource">
+        <sharding:sharding-rule data-source-names="hikariDataSource">
+            <sharding:table-rules>
+                <sharding:table-rule logic-table="sys_user" actual-data-nodes="hikariDataSource.sys_user_${0..1}" table-strategy-ref="userTableStrategy" />
+            </sharding:table-rules>
+        </sharding:sharding-rule>
+    </sharding:data-source>
+
+</beans>
